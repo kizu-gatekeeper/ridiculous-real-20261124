@@ -13,11 +13,22 @@ import sys
 LINE = 'Granny-on-Demand rents real grandmothers to join your investor calls, nod proudly, and call you a clever boy; founders pay $49 a month, because a pitch a grandmother believes in closes twice as fast.'
 
 
+def write_entry(out_dir: str) -> str:
+    """Write the entry text to ``entry.txt`` in ``out_dir``; return its path.
+
+    The file holds exactly the entry and nothing else: no trailing
+    newline, no extra whitespace, so the gate reads the text alone.
+    """
+    os.makedirs(out_dir, exist_ok=True)
+    entry_path = os.path.join(out_dir, "entry.txt")
+    with open(entry_path, "w", encoding="utf-8", newline="") as f:
+        f.write(LINE)
+    return entry_path
+
+
 def main() -> int:
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
-    os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8", newline="") as f:
-        f.write(LINE)
+    write_entry(out_dir)
     return 0
 
 
